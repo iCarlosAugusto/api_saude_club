@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { CreateCompanyInput } from 'src/api/company/dtos/create-company.input';
 import { FindCompaniesByDateInput } from 'src/api/company/dtos/find-companies-by-date.input';
 import { FindCompanyByPartnerIdInput } from 'src/api/company/dtos/find-company-by-id.input';
+import { UpdateCompanyInput } from 'src/api/company/dtos/update-company.input';
 import { PrismaService } from 'src/api/users/services/prima.service';
 
 @Injectable()
@@ -15,6 +16,17 @@ export class CompanyRepository {
         availableDay,
         bannerImage,
         partnerId 
+      }
+    })
+  }
+
+  async update(data: UpdateCompanyInput){
+    return await this.prisma.company.update({
+      where: {
+        id: data.id
+      },
+      data: {
+        ...data
       }
     })
   }

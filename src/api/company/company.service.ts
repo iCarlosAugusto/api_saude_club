@@ -4,6 +4,8 @@ import { FindCompaniesByDateInput } from './dtos/find-companies-by-date.input';
 import { FindCompanyByPartnerIdInput } from './dtos/find-company-by-id.input';
 import { CompanyRepository } from 'src/repositories/company.repository';
 import { PartnerRepository } from 'src/repositories/partner.repository';
+import { UpdateClassInput } from '../classes/dtos/update-class.input';
+import { UpdateCompanyInput } from './dtos/update-company.input';
 
 @Injectable()
 export class CompanyService {
@@ -26,6 +28,11 @@ export class CompanyService {
       name,availableDay, bannerImage, partnerId,
     })
 
+    return company;
+  }
+
+  async update(data: UpdateCompanyInput) {
+    const company = await this.companyRepository.update(data);
     return company;
   }
 
