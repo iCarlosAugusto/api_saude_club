@@ -6,6 +6,8 @@ import { UpdatePartnerInput } from './dto/update-partner.input';
 import { FindOneParnetInput } from './dto/find-one-partner.input';
 import { FindAllParnerstInput } from './dto/find-all-partners.input';
 import { UpdatePasswordPartnerInput } from './dto/update-password-partner.input';
+import { ClientEntity } from '../users/entities/client.entity';
+import { FindClientsPartnerInput } from './dto/find-clients-partner.input';
 
 @Resolver(() => PartnerEntity)
 export class PartnersResolver {
@@ -34,5 +36,10 @@ export class PartnersResolver {
   @Mutation(() => PartnerEntity)
   updatePasswordPartner(@Args('updatePasswordInput') updatePasswordInput: UpdatePasswordPartnerInput) {
     return this.partnersService.updatePassword(updatePasswordInput)
+  }
+
+  @Query(() => [ ClientEntity ], { nullable: true })
+  findAllClientsPartner(@Args('findAllClientsPartnerInput') findAllClientsPartnerInput: FindClientsPartnerInput) {
+    return this.partnersService.findClientsPartner(findAllClientsPartnerInput);
   }
 }

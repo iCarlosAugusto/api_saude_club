@@ -7,6 +7,7 @@ import { FindOneParnetInput } from '../api/partners/dto/find-one-partner.input';
 import { FindAllParnerstInput } from '../api/partners/dto/find-all-partners.input';
 import { UpdatePasswordPartnerInput } from '../api/partners/dto/update-password-partner.input';
 import { EmailService } from 'src/utils/email.service';
+import { FindClientsPartnerInput } from 'src/api/partners/dto/find-clients-partner.input';
 
 @Injectable()
 export class PartnerRepository {
@@ -16,8 +17,9 @@ export class PartnerRepository {
   ) {}
 
   async create(data: CreatePartnerInput): Promise<Partner> {
-
-    const firstPartnerPassword = Math.floor(1000 + Math.random() * 9000).toString();
+    const firstPartnerPassword = Math.floor(
+      1000 + Math.random() * 9000,
+    ).toString();
 
     const partner = await this.prisma.partner.create({
       data: {
@@ -34,7 +36,7 @@ export class PartnerRepository {
     });
     await this.emailService.sendEmailToResetPassword({
       email: data.email,
-      newPassword: firstPartnerPassword
+      newPassword: firstPartnerPassword,
     });
     return partner;
   }
@@ -95,5 +97,18 @@ export class PartnerRepository {
       take: 10,
     });
     return partners;
+  }
+
+  //REFAZER
+  async findClientsPartner({ partnerId }: FindClientsPartnerInput) {
+    const { clients } = await this.prisma.partner.findFirst({
+      select: {
+        clients: true,
+      },
+      where: {
+        id: partnerId,
+      },
+    });
+    return clients;
   }
 }

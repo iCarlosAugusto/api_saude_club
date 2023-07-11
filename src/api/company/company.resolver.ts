@@ -4,8 +4,6 @@ import { CompanyService } from './company.service';
 import { CreateCompanyInput } from './dtos/create-company.input';
 import { FindCompaniesByDateInput } from './dtos/find-companies-by-date.input';
 import { FindCompanyByPartnerIdInput } from './dtos/find-company-by-id.input';
-import { UpdateClassInput } from '../classes/dtos/update-class.input';
-import { UpdateCompanyInput } from './dtos/update-company.input';
 
 @Resolver(() => CompanyEntity)
 export class CompanyResolver {
@@ -16,13 +14,6 @@ export class CompanyResolver {
     @Args('createCompanyInput') createCompanyInput: CreateCompanyInput,
   ) {
     return this.companyService.create(createCompanyInput);
-  }
-
-  @Mutation(() => CompanyEntity)
-  updateCompany(
-    @Args('updateCompanyInput') updateCompanyInput: UpdateCompanyInput
-  ){
-    return this.companyService.update(updateCompanyInput);
   }
 
   @Query(() => [ CompanyEntity ])
